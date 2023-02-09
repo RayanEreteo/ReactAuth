@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { Alert } from 'bootstrap-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function SignUp() {
     const emailRef = useRef();
@@ -12,6 +12,8 @@ function SignUp() {
 
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+
+    const navigate = useNavigate();
 
     async function handleSubmit(e){
         e.preventDefault()
@@ -24,6 +26,7 @@ function SignUp() {
             setError('');
             setLoading(true);
             await signup(emailRef.current.value, passwordRef.current.value);
+            navigate('/')
         } catch {
             setError('Echec de la création du compte. Vérifier que vous avez pas deja un compte.')
         }
@@ -35,7 +38,7 @@ function SignUp() {
     return (
         <div className=' form-container'>
             <h1 className='display-1 mb-4'>Creation de compte</h1>
-            {error && <Alert variant='danger'>{error}</Alert>}            
+            {error && <Alert color='danger'>{error}</Alert>}  
             <div className="form-group w-25">
                 <form onSubmit={handleSubmit}>
                     <label htmlFor="email" className='form-label'>Email : </label>

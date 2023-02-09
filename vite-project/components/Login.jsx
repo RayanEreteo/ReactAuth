@@ -7,7 +7,7 @@ function Login() {
     const emailRef = useRef();
     const passwordRef = useRef();
 
-    const {signup, login} = useAuth();
+    const {login} = useAuth();
 
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
@@ -22,7 +22,7 @@ function Login() {
             await login(emailRef.current.value, passwordRef.current.value);
             navigate('/')
         } catch {
-            setError('Echec de la connexion.')
+            setError('Email ou mot de passe incorrect')
         }
 
         setLoading(false);
@@ -32,7 +32,7 @@ function Login() {
     return (
         <div className=' form-container'>
             <h1 className='display-1 mb-4'>Se connecter</h1>
-            {error && <Alert variant='danger'>{error}</Alert>}            
+            {error && <Alert color='danger'>{error}</Alert>}            
             <div className="form-group w-25">
                 <form onSubmit={handleSubmit}>
                     <label htmlFor="email" className='form-label'>Email : </label>
@@ -43,6 +43,7 @@ function Login() {
 
                     <button disabled={loading} type="submit" className='btn btn-primary mt-2'>Se connecter</button>
                     <p>Aucun compte ? <Link to={'/signup'}>Crée un compte</Link></p>
+                    <Link to={'/forgot-password'}>Mot de passe oublié ?</Link>
                 </form>
             </div>
         </div>
